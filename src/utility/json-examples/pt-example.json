@@ -1,0 +1,242 @@
+[
+    {
+        "name": "John Doe",
+        "age": 30,
+        "city": "New York",
+        "email": "john.doe@example.com",
+        "phone": "+1234567890",
+        "url": "https://www.example.com",
+        "birthdate": "1990-05-15",
+        "ipv4": "192.168.1.1",
+        "ipv6": "2001:0db8:85a3:0000:0000:8a2e:0370:7334",
+        "credit_card": "1234-5678-9012-3456",
+        "hashtags": [
+            "#json",
+            "#example"
+        ],
+        "mentions": [
+            "@user1",
+            "@user2"
+        ],
+        "currency": "$100.50",
+        "color": "#ff0000",
+        "product_code": "ABC-123",
+        "ssn": "123-45-6789"
+    },
+    {
+        "name": "Alice Smith",
+        "age": 25,
+        "city": "Los Angeles",
+        "email": "alice.smith@example.com",
+        "phone": "+1987654321",
+        "url": "ftp://ftp.example.com",
+        "birthdate": "1995-10-20",
+        "ipv4": "10.0.0.1",
+        "ipv6": "2001:0db8:85a3:0000:0000:8a2e:0370:7335",
+        "credit_card": "9876-5432-1098-7654",
+        "hashtags": [
+            "#data",
+            "#testing"
+        ],
+        "mentions": [
+            "@user3",
+            "@user4"
+        ],
+        "currency": "€50.25",
+        "color": "#00ff00",
+        "product_code": "XYZ-789",
+        "ssn": "987-65-4321"
+    },
+    {
+        "name": "Bob Johnson",
+        "age": 35,
+        "city": "Chicago",
+        "email": "bob.johnson@example.com",
+        "phone": "+1122334455",
+        "url": "http://www.example.com",
+        "birthdate": "1985-07-10",
+        "ipv4": "172.16.0.1",
+        "ipv6": "2001:0db8:85a3:0000:0000:8a2e:0370:7336",
+        "credit_card": "4567-8901-2345-6789",
+        "hashtags": [
+            "#coding",
+            "#programming"
+        ],
+        "mentions": [
+            "@user5",
+            "@user6"
+        ],
+        "currency": "£75.75",
+        "color": "#0000ff",
+        "product_code": "DEF-456",
+        "ssn": "456-78-9012"
+    },
+    {
+        "name": "Emily Brown",
+        "age": 28,
+        "city": "San Francisco",
+        "email": "emily.brown@example.com",
+        "phone": "+9988776655",
+        "url": "https://example.com",
+        "birthdate": "1992-03-25",
+        "ipv4": "192.0.2.1",
+        "ipv6": "2001:0db8:85a3:0000:0000:8a2e:0370:7337",
+        "credit_card": "3456-7890-1234-5678",
+        "hashtags": [
+            "#design",
+            "#art"
+        ],
+        "mentions": [
+            "@user7",
+            "@user8"
+        ],
+        "currency": "¥25.50",
+        "color": "#ff00ff",
+        "product_code": "GHI-789",
+        "ssn": "789-01-2345"
+    },
+    {
+        "name": "David Wilson",
+        "age": 40,
+        "city": "Houston",
+        "email": "david.wilson@example.com",
+        "phone": "+1123456789",
+        "url": "http://www.example.com",
+        "birthdate": "1980-12-05",
+        "ipv4": "198.51.100.1",
+        "ipv6": "2001:0db8:85a3:0000:0000:8a2e:0370:7338",
+        "credit_card": "6789-0123-4567-8901",
+        "hashtags": [
+            "#travel",
+            "#adventure"
+        ],
+        "mentions": [
+            "@user9",
+            "@user10"
+        ],
+        "currency": "$500.00",
+        "color": "#ffff00",
+        "product_code": "JKL-012",
+        "ssn": "012-34-5678"
+    },
+    {
+        "name": "Emma Garcia",
+        "age": 22,
+        "city": "Miami",
+        "email": "emma.garcia@example.com",
+        "phone": "+1447333222",
+        "url": "https://example.com",
+        "birthdate": "1998-08-15",
+        "ipv4": "203.0.113.1",
+        "ipv6": "2001:0db8:85a3:0000:0000:8a2e:0370:7339",
+        "credit_card": "9012-3456-7890-1234",
+        "hashtags": [
+            "#beach",
+            "#sun"
+        ],
+        "mentions": [
+            "@user11",
+            "@user12"
+        ],
+        "currency": "€20.00",
+        "color": "#00ffff",
+        "product_code": "MNO-345",
+        "ssn": "901-23-4567"
+    },
+    {
+        "name": "Michael Martinez",
+        "age": 33,
+        "city": "Seattle",
+        "email": "michael.martinez@example.com",
+        "phone": "+1555666777",
+        "url": "ftp://ftp.example.com",
+        "birthdate": "1987-09-08",
+        "ipv4": "198.51.100.2",
+        "ipv6": "2001:0db8:85a3:0000:0000:8a2e:0370:7340",
+        "credit_card": "2345-6789-0123-4567",
+        "hashtags": [
+            "#technology",
+            "#innovation"
+        ],
+        "mentions": [
+            "@user13",
+            "@user14"
+        ],
+        "currency": "$99.99",
+        "color": "#ff8000",
+        "product_code": "PQR-678",
+        "ssn": "345-67-8901"
+    },
+    {
+        "name": "Olivia Rodriguez",
+        "age": 29,
+        "city": "Boston",
+        "email": "olivia.rodriguez@example.com",
+        "phone": "+1777888999",
+        "url": "http://www.example.com",
+        "birthdate": "1991-06-30",
+        "ipv4": "203.0.113.2",
+        "ipv6": "2001:0db8:85a3:0000:0000:8a2e:0370:7341",
+        "credit_card": "7890-1234-5678-9012",
+        "hashtags": [
+            "#food",
+            "#cooking"
+        ],
+        "mentions": [
+            "@user15",
+            "@user16"
+        ],
+        "currency": "£150.00",
+        "color": "#008000",
+        "product_code": "STU-901",
+        "ssn": "456-78-9012"
+    },
+    {
+        "name": "Sophia Martinez",
+        "age": 26,
+        "city": "Atlanta",
+        "email": "sophia.martinez@example.com",
+        "phone": "+1666777888",
+        "url": "ssh://192.168.2.1",
+        "birthdate": "1994-04-18",
+        "ipv4": "198.51.100.3",
+        "ipv6": "2001:0db8:85a3:0000:0000:8a2e:0370:7342",
+        "credit_card": "3456-7890-1234-5678",
+        "hashtags": [
+            "#music",
+            "#concert"
+        ],
+        "mentions": [
+            "@user17",
+            "@user18"
+        ],
+        "currency": "¥75.00",
+        "color": "#808080",
+        "product_code": "VWX-234",
+        "ssn": "567-89-0123"
+    },
+    {
+        "name": "William Lee",
+        "age": 31,
+        "city": "Dallas",
+        "email": "william.lee@example.com",
+        "phone": "+1555444333",
+        "url": "http://www.example.com",
+        "birthdate": "1989-11-23",
+        "ipv4": "203.0.113.3",
+        "ipv6": "2001:0db8:85a3:0000:0000:8a2e:0370:7343",
+        "credit_card": "4567-8901-2345-6789",
+        "hashtags": [
+            "#fitness",
+            "#exercise"
+        ],
+        "mentions": [
+            "@user19",
+            "@user20"
+        ],
+        "currency": "$49.95",
+        "color": "#000080",
+        "product_code": "YZA-345",
+        "ssn": "678-90-1234"
+    }
+]

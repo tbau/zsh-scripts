@@ -1,0 +1,49 @@
+{
+    "defaults":{
+        "arg1": "New York, NY",
+        "arg2": 0
+    },
+    "actions": [
+        {
+            "type": "navigate",
+            "url": "https://weather.com"
+        },
+        {
+            "type": "type",
+            "url": "https://weather.com",
+            "text": "{arg1}",
+            "element": "//input[@id='LocationSearch_input']",
+            "wait": true,
+            "delay": 3
+        },
+        {
+            "type": "enter"
+        },
+        {
+            "type": "click",
+            "element": "//span[normalize-space()='{arg1}']"
+        },
+        {
+            "start_new_line": true,
+            "before_label": "Temperature: ",
+            "type": "get",
+            "element": "//span[@class='CurrentConditions--tempValue--MHmYY']",
+            "end_new_line": true
+        },
+        {
+            "before_label": "Conditions: ",
+            "type": "get",
+            "element": "//div[@class='CurrentConditions--phraseValue--mZC_p']",
+            "end_new_line": true
+        },
+        {
+            "before_label": "High-Low: ",
+            "type": "get",
+            "element": "//div[@class='CurrentConditions--tempHiLoValue--3T1DG']",
+            "end_new_line": true,
+            "end_new_line_count": 2,
+            "wait": true,
+            "delay": "{arg2}"
+        }
+    ]
+}

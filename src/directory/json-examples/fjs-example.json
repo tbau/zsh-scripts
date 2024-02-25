@@ -1,0 +1,1 @@
+{"firstName":"John","lastName":"Doe","age":30,"address":{"streetAddress":"1234 Elm Street","city":"Springfield","state":"IL","postalCode":"12345"},"phoneNumbers":[{"type":"home","number":"555-1234"},{"type":"work","number":"555-5678"}]}
