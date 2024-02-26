@@ -1,4 +1,4 @@
-# selenium_script.py
+# start_selenium.py
 
 import os
 import json
@@ -9,8 +9,6 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import argparse
-# service = Service(executable_path="mnt/c/Program Files/Google Chrome/Application/chrome.exe")
-
 
 parser = argparse.ArgumentParser("selenium")
 parser.add_argument("config", help="Config filename to load", type=str)
@@ -19,7 +17,6 @@ cmd_args = parser.parse_args()
 
 homedir = os.path.expanduser("~")
 script_dir = os.path.dirname(os.path.realpath(__file__))
-# config_file = os.path.abspath(os.path.join(script_dir, 'configs/'+cmd_args.config))
 config_file = os.path.expanduser(cmd_args.config)
 
 with open(config_file) as f:
@@ -31,17 +28,13 @@ if config.get('defaults'):
     for k in config['defaults']:
         args[k]=config['defaults'][k]
 
-# print(args)
-# args = {f"arg{i+1}": arg for i, arg in enumerate(cmd_args.args)}
 args.update({f"arg{i+1}": arg for i, arg in enumerate(cmd_args.args)})
-# print(args)
 options = webdriver.ChromeOptions()
 options.add_argument("--no-sandbox")
 options.add_argument('--disable-gpu') 
 # options.add_argument("--headless")
 
 browser =  webdriver.Chrome(options=options)
-# browser.maximize_window();
 wait = WebDriverWait(browser, timeout=20)
 
 if config.get('actions'):
@@ -83,6 +76,5 @@ if config.get('actions'):
             if args:
                 time.sleep(int(str(action['delay']).format(**args)))
             else:
-                time.sleep(int(action['delay']))
-                
+                time.sleep(int(action['delay']))  
 browser.quit()

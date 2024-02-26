@@ -103,8 +103,6 @@ elif [ -n "$BASH_VERSION" ]; then
     zsh_scripts_directories["directory_scripts_dir"]=$(dirname "${BASH_SOURCE[0]}")
 fi
 
-# $(echo "$(cd "$(dirname "${(%):-%x}")" && pwd)")
-
 # DO NOT UNCOMMENT AND USE IN THIS FILE
 #
 # To use this code, copy it to a script

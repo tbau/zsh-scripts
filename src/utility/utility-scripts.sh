@@ -45,8 +45,6 @@ lp() {
 
     # Iterate over each command and list its processes
     for cmd in "${commands[@]}"; do
-        # pids=$(pgrep -d',' -f "$cmd")  # Get PIDs of processes matching the command
-        # pids=$(pgrep -d',' -f "$cmd" | awk -v cmd="$cmd" '$0 ~ ("(^| )" cmd "( |$)") && index($0, "/") != 1 {print}')
         pids=$(pgrep -d',' -f "$cmd")
         filtered_pids=""
         for pid in $(echo "$pids" | tr ',' ' '); do
