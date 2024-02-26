@@ -41,11 +41,7 @@ lp() {
                 "tail" "nano" "vim" "npm" "webpack" "ls" "cd" "mkdir" "rm" "mv" \
                 "cp" "chmod" "chown" "sed" "awk" "find" "tar" "gzip" "curl" \
                 "wget" "ssh" "scp" "git" "docker" "kubectl" "java" "gcc" "make" \
-<<<<<<< HEAD
                 "perl" "ruby" "php" "flask" "psql")
-=======
-                "perl" "ruby" "php")
->>>>>>> 8df675c73390f80458d4d5cd32720bc068e9924e
 
     # Iterate over each command and list its processes
     for cmd in "${commands[@]}"; do
