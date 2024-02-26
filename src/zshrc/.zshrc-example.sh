@@ -44,6 +44,9 @@ source ~/zsh-scripts/src/utility/dev-resource-scripts.sh
 # Initalize shortcuts for utility commands
 source ~/zsh-scripts/src/utility/utility-scripts.sh
 
+# Initalize shortcuts for weather commands
+source ~/zsh-scripts/src/weather/weather-scripts.sh
+
 # Sets the newline before and after the git prompt
 git_prompt_set_newline 0 1
 # Sets the newline before and after the nvm prompt
