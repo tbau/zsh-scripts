@@ -38,7 +38,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     # Function to list processes and PIDs of specified commands
     lp() {
         # Define an array of commands to search for
-        local commands=("python" "node" "shell" "bash" "sql" "ps" "grep" "cat" "echo" \
+        local commands=("python" "node" "sh" "sql" "ps" "grep" "cat" "echo" \
                     "tail" "nano" "vim" "npm" "webpack" "ls" "cd" "mkdir" "rm" "mv" \
                     "cp" "chmod" "chown" "sed" "awk" "find" "tar" "gzip" "curl" \
                     "wget" "ssh" "scp" "git" "docker" "kubectl" "java" "gcc" "make" \
@@ -49,7 +49,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
             pids=$(pgrep -d',' -f "$cmd")
             filtered_pids=""
             for pid in $(echo "$pids" | tr ',' ' '); do
-                if ps -p $pid -o comm= | grep -q "^$cmd$"; then
+                if ps -p $pid -o args= | grep -q "$cmd "; then
                     filtered_pids="$filtered_pids,$pid"
                 fi
             done
