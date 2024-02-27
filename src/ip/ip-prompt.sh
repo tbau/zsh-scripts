@@ -8,8 +8,7 @@
 # Exported variables
 #   IP: Current ipv4 address
 #   IP_PROMPT: Custom prompt that will either display the ip address or localhost
-ip_prompt() {
-    
+ip_prompt() {    
     if [[ "$OSTYPE" == "darwin"* ]]; then
         ipconfig getifaddr en0
     else
