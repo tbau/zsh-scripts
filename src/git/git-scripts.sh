@@ -11,6 +11,47 @@ gsw(){
     git switch -
 }
 
+# Pull branch
+gp(){
+    git pull
+}
+
+# Merge dev
+gmd(){
+    git merge dev
+}
+
+# Git log with graphs
+gl(){
+    git log --oneline --graph --decorate
+}
+
+# Git checkout
+gc(){
+    git checkout $1
+}
+
+# Git checkout branch
+gcb(){
+    git checkout -b $1
+}
+
+# Git branch delete
+gdb(){           
+    local branch_name="$1"
+    # Check if the branch exists
+    if git show-ref --quiet --verify "refs/heads/$branch_name"; then
+        read -p "Are you sure you want to delete the branch '$branch_name'? [y/N]: " response
+        if [[ "$response" =~ ^[Yy]$ ]]; then
+            git branch -D "$branch_name"
+        else
+            echo "Branch deletion canceled."
+        fi
+    else
+        echo "Error: Branch '$branch_name' does not exist."
+    fi
+}
+
 # List the current git branch
 branch(){
     git rev-parse --abbrev-ref HEAD

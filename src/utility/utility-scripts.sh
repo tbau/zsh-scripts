@@ -34,42 +34,79 @@ nwsn(){
     fi
 }
 
-# Function to list processes and PIDs of specified commands
-lp() {
-    # Define an array of commands to search for
-    local commands=("python" "node" "shell" "bash" "sql" "ps" "grep" "cat" "echo" \
-                "tail" "nano" "vim" "npm" "webpack" "ls" "cd" "mkdir" "rm" "mv" \
-                "cp" "chmod" "chown" "sed" "awk" "find" "tar" "gzip" "curl" \
-                "wget" "ssh" "scp" "git" "docker" "kubectl" "java" "gcc" "make" \
-                "perl" "ruby" "php" "flask" "psql")
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    # Function to list processes and PIDs of specified commands
+    lp() {
+        # Define an array of commands to search for
+        local commands=("python" "node" "shell" "bash" "sql" "ps" "grep" "cat" "echo" \
+                    "tail" "nano" "vim" "npm" "webpack" "ls" "cd" "mkdir" "rm" "mv" \
+                    "cp" "chmod" "chown" "sed" "awk" "find" "tar" "gzip" "curl" \
+                    "wget" "ssh" "scp" "git" "docker" "kubectl" "java" "gcc" "make" \
+                    "perl" "ruby" "php" "flask" "psql")
 
-    # Iterate over each command and list its processes
-    for cmd in "${commands[@]}"; do
-        pids=$(pgrep -d',' -f "$cmd")
-        filtered_pids=""
-        for pid in $(echo "$pids" | tr ',' ' '); do
-             if ps -p $pid -o cmd= | grep -q "$cmd\( \)"; then
-                filtered_pids="$filtered_pids,$pid"
+        # Iterate over each command and list its processes
+        for cmd in "${commands[@]}"; do
+            pids=$(pgrep -d',' -f "$cmd")
+            filtered_pids=""
+            for pid in $(echo "$pids" | tr ',' ' '); do
+                if ps -p $pid -o comm= | grep -q "^$cmd$"; then
+                    filtered_pids="$filtered_pids,$pid"
+                fi
+            done
+            pids=${filtered_pids:1} 
+
+            if [ -n "$pids" ]; then
+                for pid in $(echo "$pids" | tr ',' '\n'); do
+                    echo "Command: $cmd"
+                    pid=$(echo "$pid" | tr -d '[:space:]')
+                    read -r user cpu mem stat <<< $(ps -p $pid -o user=,%cpu=,%mem=,stat=)
+                    start=$(ps -p $pid -o lstart=)
+                    cmd_output=$(ps -p $pid -o args=)
+
+                    printf "%-8s %-6s %-6s %-6s %-6s %-12s %-s\n" "PID" "USER" "%CPU" "%MEM" "STAT" "START" "COMMAND"
+                    printf "%-8s %-7s %-6s %-5s %-6s %-12.11s %-s\n" "$pid" "$user" "$cpu" "$mem" "$stat" "$start" "$cmd_output"
+                    echo
+                done
             fi
         done
-        pids=${filtered_pids:1} 
+    }
+else
+    # Function to list processes and PIDs of specified commands
+    lp() {
+        # Define an array of commands to search for
+        local commands=("python" "node" "shell" "bash" "sql" "ps" "grep" "cat" "echo" \
+                    "tail" "nano" "vim" "npm" "webpack" "ls" "cd" "mkdir" "rm" "mv" \
+                    "cp" "chmod" "chown" "sed" "awk" "find" "tar" "gzip" "curl" \
+                    "wget" "ssh" "scp" "git" "docker" "kubectl" "java" "gcc" "make" \
+                    "perl" "ruby" "php" "flask" "psql")
 
-        if [ -n "$pids" ]; then
-            for pid in $(echo "$pids" | tr ',' '\n'); do
-                echo "Command: $cmd"
-                read -r pid ppid user cpu mem stat <<< $(ps -p $pid -o pid=,ppid=,user=,%cpu=,%mem=,stat= --no-headers)
-                
-                start=$(ps -p $pid -o start= --no-headers)
-                cmd_output=$(ps -p $pid -o cmd= --no-headers)
-
-                printf "%-8s %-8s %-10s %-6s %-6s %-6s %-10s %-s\n" "PID" "PPID" "USER" "%CPU" "%MEM" "STAT" "START" "COMMAND"
-                printf "%-8s %-8s %-10s %-6s %-6s %-4s %-12s %-s\n" "$pid" "$ppid" "$user" "$cpu" "$mem" "$stat" "$start" "$cmd_output"
-                echo
+        # Iterate over each command and list its processes
+        for cmd in "${commands[@]}"; do
+            pids=$(pgrep -d',' -f "$cmd")
+            filtered_pids=""
+            for pid in $(echo "$pids" | tr ',' ' '); do
+                if ps -p $pid -o cmd= | grep -q "$cmd\( \)"; then
+                    filtered_pids="$filtered_pids,$pid"
+                fi
             done
-        fi
-    done
-}
+            pids=${filtered_pids:1} 
 
+            if [ -n "$pids" ]; then
+                for pid in $(echo "$pids" | tr ',' '\n'); do
+                    echo "Command: $cmd"
+                    read -r pid ppid user cpu mem stat <<< $(ps -p $pid -o pid=,ppid=,user=,%cpu=,%mem=,stat= --no-headers)
+                    
+                    start=$(ps -p $pid -o start= --no-headers)
+                    cmd_output=$(ps -p $pid -o cmd= --no-headers)
+
+                    printf "%-6s %-6s %-6s %-6s %-6s %-6s %-8s %-s\n" "PID" "PPID" "USER" "%CPU" "%MEM" "STAT" "START" "COMMAND"
+                    printf "%-6s %-6s %-6s %-6s %-6s %-4s %-10s %-s\n" "$pid" "$ppid" "$user" "$cpu" "$mem" "$stat" "$start" "$cmd_output"
+                    echo
+                done
+            fi
+        done
+    }
+fi
 # Analyze a file and provide a word count report
 # Argument:
 #   Input file:  file to generate report for
