@@ -9,7 +9,12 @@
 #   IP: Current ipv4 address
 #   IP_PROMPT: Custom prompt that will either display the ip address or localhost
 ip_prompt() {
-    IP=$(ip -4 address show eth0 | grep -oP 'inet \K[\d.]+')
+    
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        ipconfig getifaddr en0
+    else
+        IP=$(ip -4 address show eth0 | grep -oP 'inet \K[\d.]+')
+    fi
     if [ "$SHOW_IP" = "1" ]; then
         IP_PROMPT=$IP
     else

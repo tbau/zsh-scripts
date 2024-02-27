@@ -23,15 +23,29 @@ nvm_prompt_newline() {
 
     local countBefore=$nvm_prompt_newlines_before
     local countAfter=$nvm_prompt_newlines_after
-    local newLinesBefore=''
-    local newLinesAfter=''
+    newLinesBefore=''
+    newLinesAfter=''
+    
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        if (($countBefore > 0)); then
+            for i in $(seq 1 $countBefore); do
+                newLinesBefore=$newLinesBefore$'%{\n%}'
+            done           
+        fi        
+        if (($countAfter > 0)); then
+            for j in $(seq 1 $countAfter); do
+                newLinesAfter=$newLinesAfter$'%{\n%}'
+            done
+        fi
+    else
+        for i in $(seq 1 $countBefore); do
+            newLinesBefore=$newLinesBefore$'%{\n\r%}'
+        done
+        for j in $(seq 1 $countAfter); do
+            newLinesAfter=$newLinesAfter$'%{\n\r%}'
+        done
+    fi
 
-    for i in $(seq 1 $countBefore); do
-        newLinesBefore=$newLinesBefore$'%{\n\r%}'
-    done
-    for j in $(seq 1 $countAfter); do
-        newLinesAfter=$newLinesAfter$'%{\n\r%}'
-    done
 
     if [ -n "$NVM_PROMPT" ]; then
         NVM_PROMPT=$newLinesBefore$NVM_PROMPT$newLinesAfter
