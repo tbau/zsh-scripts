@@ -26,11 +26,16 @@ mon() {
 # Output list of available networks, network types,
 # authentication types, encryption modes, and signal band
 # strengths
-nwsn(){
+netscan(){
     if [ -n "$WSL_DISTRO_NAME" ]; then
         powershell.exe -Command "netsh wlan show networks mode=Bssid"
-    else
-        iw dev wlan0 scan
+    elif [[ "$OSTYPE" == "darwin"* ]]; then
+        echo
+        networksetup -listallhardwareports | awk '/Wi-Fi|AirPort/{getline; print $NF}' | xargs -I{} /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I \
+        | column -t
+        echo
+        networksetup -listallhardwareports | awk '/Wi-Fi|AirPort/{getline; print $NF}' | xargs -I{} /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -s 
+        echo
     fi
 }
 
@@ -38,7 +43,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     # Function to list processes and PIDs of specified commands
     lp() {
         # Define an array of commands to search for
-        local commands=("python" "node" "sh" "sql" "ps" "grep" "cat" "echo" \
+        local commands=("python" "node" "sh" "sql" "ps" "cat" "echo" \
                     "tail" "nano" "vim" "npm" "webpack" "ls" "cd" "mkdir" "rm" "mv" \
                     "cp" "chmod" "chown" "sed" "awk" "find" "tar" "gzip" "curl" \
                     "wget" "ssh" "scp" "git" "docker" "kubectl" "java" "gcc" "make" \

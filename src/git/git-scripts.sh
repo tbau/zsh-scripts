@@ -1,6 +1,45 @@
 #!/bin/zsh
 # Aliases uses for git commands
 
+# Git status
+gs(){
+    git status
+}
+
+# Pull branch
+gp(){
+    git pull
+}
+
+# Git checkout
+gc(){
+    git checkout $1
+}
+
+# Git log with graphs
+gl(){
+    git log --oneline --graph --decorate
+}
+
+# Git clone repo
+gcr() {
+    if [ -z "$1" ]; then
+        echo "Usage: gcr <repository-url>"
+        return 1
+    fi
+
+    repo_url=$1
+
+    # Check if the repository exists
+    if git ls-remote --exit-code "$repo_url" &> /dev/null; then
+        # Repository is safe, proceed with cloning
+        git clone "$repo_url"
+    else
+        echo "Repository does not exist or is not accessible."
+        return 1
+    fi
+}
+
 # Checkout dev branch
 gcd(){
     git checkout dev
@@ -11,24 +50,9 @@ gsw(){
     git switch -
 }
 
-# Pull branch
-gp(){
-    git pull
-}
-
 # Merge dev
 gmd(){
     git merge dev
-}
-
-# Git log with graphs
-gl(){
-    git log --oneline --graph --decorate
-}
-
-# Git checkout
-gc(){
-    git checkout $1
 }
 
 # Git checkout branch
@@ -58,12 +82,12 @@ branch(){
 }
 
 # Writes git changelog to file
-git-changelog(){
+gclog(){
     git log --pretty=format:"%h - %an, %ar : %s" > changelog.txt
 }
 
 # Downloads list of repositories from a file
-repoClone(){
+cloneRepos(){
     while IFS= read -r repo; do
         repo_name=${repo##*/}  # Get the last component of the URL (basename)
         repo_name=${repo_name%.git}  # Remove the .git extension
