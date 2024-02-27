@@ -56,11 +56,7 @@ git_prompt_newline() {
                 newLinesAfter=$newLinesAfter$'%{\n%}'
             done
         fi
-<<<<<<< HEAD
     else
-=======
-    else;
->>>>>>> b2caba559bb41398b3963f699022908d0f80e880
         for i in $(seq 1 $countBefore); do
             newLinesBefore=$newLinesBefore$'%{\n\r%}'
         done
