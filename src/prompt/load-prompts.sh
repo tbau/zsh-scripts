@@ -62,21 +62,33 @@ display_prompt_newline() {
 
     local countBefore=$end_prompt_newlines_before
     local countAfter=$end_prompt_newlines_after
+    newLinesBefore=""
+    newLinesAfter=""
   
     if [ -z "$END_PROMPT" ]; then
         countBefore=$end_prompt_newlines_before_no_prompts
         countAfter=$end_prompt_newlines_after_no_prompts
     fi
 
-    newLinesBefore=""
-    newLinesAfter=""
-
-    for i in $(seq 1 $countBefore); do
-        newLinesBefore=$newLinesBefore$'%{\n\r%}'
-    done
-    for j in $(seq 1 $countAfter); do
-        newLinesAfter=$newLinesAfter$'%{\n\r%}'
-    done
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        if (($countBefore > 0)); then
+            for i in $(seq 1 $countBefore); do
+                newLinesBefore=$newLinesBefore$'%{\n%}'
+            done           
+        fi        
+        if (($countAfter > 0)); then
+            for j in $(seq 1 $countAfter); do
+                newLinesAfter=$newLinesAfter$'%{\n%}'
+            done
+        fi
+    else;
+        for i in $(seq 1 $countBefore); do
+            newLinesBefore=$newLinesBefore$'%{\n\r%}'
+        done
+        for j in $(seq 1 $countAfter); do
+            newLinesAfter=$newLinesAfter$'%{\n\r%}'
+        done
+    fi
 
    END_PROMPT=$newLinesBefore$END_PROMPT$newLinesAfter
 }

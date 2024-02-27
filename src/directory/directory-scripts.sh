@@ -43,7 +43,7 @@ if ! type tree >/dev/null 2>&1; then
     #   directory (optional, default: current directory): The directory to list
     #   indent (optional, default: empty string): The indentation string for visual tree representation
     tree() {
-        local show_hidden="${1:-false}"
+        local show_hidden="${1:-true}"
         local directory="${2:-.}"
         local indent="${3:-}"
         local file
