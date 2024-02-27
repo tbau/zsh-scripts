@@ -10,7 +10,7 @@
 #   IP_PROMPT: Custom prompt that will either display the ip address or localhost
 ip_prompt() {    
     if [[ "$OSTYPE" == "darwin"* ]]; then
-        ipconfig getifaddr en0
+        IP=$(ipconfig getifaddr en0)
     else
         IP=$(ip -4 address show eth0 | grep -oP 'inet \K[\d.]+')
     fi
