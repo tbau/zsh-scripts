@@ -9,7 +9,7 @@ documentCommand(){
         commandTagArr[$key]="$commandTagArr[$key] $1"
         shift
     done
-    commandTagArr[$key]="$commandTagArr[$key] $key"
+    commandTagArr[$key]="$commandTagArr[$key] $key "
     commandAccArr[$key]=$2
     commandIndArr+=("$key")
 }
@@ -17,7 +17,12 @@ documentCommand(){
 printCommands() {
     max_key_length=0
     pattern=$1
-    filteredCommands=$(print -l "${(@k)commandTagArr[(R)*$pattern*]}")
+
+    if [[ -z $pattern ]]; then
+      filteredCommands=$(print -l "${(@k)commandAccArr}")
+    else
+        filteredCommands=$(print -l "${(@k)commandTagArr[(R)*(^| )$pattern( |$)*]}")
+    fi
     
     if [[ -z $filteredCommands ]]; then
         printf "\nNo commands with that pattern found\n\n"
