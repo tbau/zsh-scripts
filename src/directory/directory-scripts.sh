@@ -37,7 +37,7 @@ cf() {
 
 # Check if the tree function already exists to not conflict with existing tree command
 if ! type tree >/dev/null 2>&1; then
-    # Recursively lists files and directories in a directory tree.
+    # Recursively lists files and directories in a directory tree
     # Arguments:
     #   show_hidden (optional, default: false): If set to true, includes hidden files and directories in the output
     #   directory (optional, default: current directory): The directory to list
@@ -102,6 +102,14 @@ if [ -n "$ZSH_VERSION" ]; then
 elif [ -n "$BASH_VERSION" ]; then
     zsh_scripts_directories["directory_scripts_dir"]=$(dirname "${BASH_SOURCE[0]}")
 fi
+
+source "$(dirname "${zsh_scripts_directories["directory_scripts_dir"]}")/shared/shared-scripts.sh"
+
+documentCommand "directory" "count" "unique" "Find unique lines with count for files in directory"
+documentCommand "directory" "format" "json" "file" "fjs" "Format Json File"
+documentCommand "directory" "find" "file" "ff" "Find Files by Name"
+documentCommand "directory" "count" "file" "cf" "Count Files in Directory"
+documentCommand "directory" "file" "directory" "list" "graph" "tree" "Recursively list files and directories in a tree"
 
 # DO NOT UNCOMMENT AND USE IN THIS FILE
 #

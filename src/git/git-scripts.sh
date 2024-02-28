@@ -61,11 +61,12 @@ gcb(){
 }
 
 # Git branch delete
-gdb(){           
+gbd(){           
     local branch_name="$1"
     # Check if the branch exists
     if git show-ref --quiet --verify "refs/heads/$branch_name"; then
-        read -p "Are you sure you want to delete the branch '$branch_name'? [y/N]: " response
+        print -n "Are you sure you want to delete the branch '$branch_name'? [y/N]: "
+        read response
         if [[ "$response" =~ ^[Yy]$ ]]; then
             git branch -D "$branch_name"
         else
@@ -76,8 +77,13 @@ gdb(){
     fi
 }
 
+# List the all branches
+gb(){
+    git branch
+}
+
 # List the current git branch
-branch(){
+cb(){
     git rev-parse --abbrev-ref HEAD
 }
 
@@ -108,3 +114,20 @@ if [ -n "$ZSH_VERSION" ]; then
 elif [ -n "$BASH_VERSION" ]; then
     zsh_scripts_directories["git_scripts_dir"]=$(dirname "${BASH_SOURCE[0]}")
 fi
+
+source "$(dirname "${zsh_scripts_directories["git_scripts_dir"]}")/shared/shared-scripts.sh"
+
+documentCommand "git" "gs" "Get status of modified and committed files"
+documentCommand "git" "gp" "Pull branch from remote repository"
+documentCommand "git" "gc" "Checkout an existing branch"
+documentCommand "git" "gl" "Print commit history with graphical branches"
+documentCommand "git" "gcr" "Clone remote repository"
+documentCommand "git" "gcd" "Checkout dev branch"
+documentCommand "git" "gsw" "Switch to previous branch"
+documentCommand "git" "gmd" "Merge dev into current branch"
+documentCommand "git" "gcb" "Checkout new branch"
+documentCommand "git" "gbd" "Delete local branch"
+documentCommand "git" "gb" "Print all branches"
+documentCommand "git" "cb" "Print current branch"
+documentCommand "git" "gclog" "Output git commit changelog to file"
+documentCommand "git" "repos" "cloneRepos" "Clones list of repositories from a file"

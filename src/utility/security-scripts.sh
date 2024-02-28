@@ -26,3 +26,9 @@ if [ -n "$ZSH_VERSION" ]; then
 elif [ -n "$BASH_VERSION" ]; then
     zsh_scripts_directories["utility_scripts_dir"]=$(dirname "${BASH_SOURCE[0]}")
 fi
+
+source "$(dirname "${zsh_scripts_directories["utility_scripts_dir"]}")/shared/shared-scripts.sh"
+
+documentCommand "security" "password" "encryption" "passgen" "Generate a password of a certain length"
+
+documentCommand "security" "sha" "encryption" "integrity" "checksum" "Find the checksum of a file"

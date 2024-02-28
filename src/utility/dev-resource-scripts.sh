@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-# Prints a list of useful cheat sheets for developers
+# Prints a list of useful cheat sheets for development
 resources() {
     printf "-------------------------------------------------------Resources-------------------------------------------------------\n"
     printf "1.  Git Cheat Sheet              - https://education.github.com/git-cheat-sheet-education.pdf\n"
@@ -37,3 +37,7 @@ if [ -n "$ZSH_VERSION" ]; then
 elif [ -n "$BASH_VERSION" ]; then
     zsh_scripts_directories["utility_scripts_dir"]=$(dirname "${BASH_SOURCE[0]}")
 fi
+
+source "$(dirname "${zsh_scripts_directories["utility_scripts_dir"]}")/shared/shared-scripts.sh"
+
+documentCommand "resources" "help" "links" "development" "resources" "Prints a list of useful cheat sheets for development"
