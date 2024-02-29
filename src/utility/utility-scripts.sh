@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-# Description: Monitor system monitoring information including CPU usage,
+# Monitor system information including CPU usage,
 # memory usage, disk usage, and network traffic
 mon() {
     echo ""
@@ -40,7 +40,7 @@ netscan(){
 }
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
-    # Function to list processes and PIDs of specified commands
+    # List processes and PIDs of specified commands
     lp() {
         # Define an array of commands to search for
         local commands=("python" "node" "sh" "sql" "ps" "cat" "echo" \
@@ -76,7 +76,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
         done
     }
 else
-    # Function to list processes and PIDs of specified commands
+    # List processes and PIDs of specified commands
     lp() {
         # Define an array of commands to search for
         local commands=("python" "node" "shell" "bash" "sql" "ps" "grep" "cat" "echo" \
@@ -113,7 +113,7 @@ else
     }
 fi
 # Analyze a file and provide a word count report
-# Argument:
+# Arguments:
 #   Input file:  file to generate report for
 #   Report file: file to write report to
 anfi() {
@@ -131,7 +131,7 @@ anfi() {
     grep -oE '\w+' | sort | uniq -c | sort -rn > "$report_file"
 }
 
-# Analyze all files in a directory and provide a work count report for all files
+# Analyze all files in a directory and provide a word count report for all files
 # Argument:
 #   Directory: directory to generate reports of
 andir() {
@@ -245,3 +245,10 @@ if [ -n "$ZSH_VERSION" ]; then
 elif [ -n "$BASH_VERSION" ]; then
     zsh_scripts_directories["utility_scripts_dir"]=$(dirname "${BASH_SOURCE[0]}")
 fi
+
+documentCommand "resources" "system" "monitor" "cpu" "mon" "Monitor system information"
+documentCommand "networks" "networking" "scan" "monitor" "netscan" "Scan available networks"
+documentCommand "processes" "cpu" "scan" "monitor" "ps" "lp" "List processes and PIDs of specified commands"
+documentCommand "file" "analyze" "count" "report" "anfi" "Analyze a file and provide a word count report"
+documentCommand "file" "directory" "analyze" "count" "report" "andir" "Analyze directory and provide a word count report for files"
+documentCommand "file" "analyze" "security" "report" "scan" "pt" "Pull sensitive information from a file"

@@ -40,4 +40,4 @@ fi
 
 source "$(dirname "${zsh_scripts_directories["utility_scripts_dir"]}")/shared/shared-scripts.sh"
 
-documentCommand "resources" "help" "links" "development" "resources" "Prints a list of useful cheat sheets for development"
+documentCommand "help" "links" "development" "resources" "Prints a list of useful cheat sheets for development"

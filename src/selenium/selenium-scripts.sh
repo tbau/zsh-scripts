@@ -47,8 +47,8 @@ install-chromedriver(){
     rm chrome-linux64.zip  chromedriver-linux64.zip
 }
 
-python-install-selenium(){
-    pip install selenium
+pyselinst(){
+    pip install selenium==4.17.2
 }
 
 # Used to setup pathing
@@ -61,3 +61,7 @@ elif [ -n "$BASH_VERSION" ]; then
 fi
 
 source  $zsh_scripts_directories["selenium_scripts_dir"]'/selenium-weather/selenium-weather.sh'
+
+documentCommand "selenium" "bot" "automation" "web" "selenium" "Run a selenium config with passed arguments"
+documentCommand "selenium" "server" "wsl" "graph" "xming" "Start Xming server in WSL if installed"
+documentCommand "selenium" "bot" "install" "pyselinst" "Install Selenium==4.17.2 for Python"

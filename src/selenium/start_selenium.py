@@ -15,9 +15,10 @@ parser.add_argument("config", help="Config filename to load", type=str)
 parser.add_argument('args', nargs='*', type=str, help='Arguments for config use')
 cmd_args = parser.parse_args()
 
-homedir = os.path.expanduser("~")
+home_dir = os.path.expanduser("~")
 script_dir = os.path.dirname(os.path.realpath(__file__))
 config_file = os.path.expanduser(cmd_args.config)
+user_data_dir = os.path.join(home_dir, "chrome-selenium-user-data")
 
 with open(config_file) as f:
     config = json.load(f)
@@ -29,18 +30,24 @@ if config.get('defaults'):
         args[k]=config['defaults'][k]
 
 args.update({f"arg{i+1}": arg for i, arg in enumerate(cmd_args.args)})
-options = webdriver.ChromeOptions()
-options.add_argument("--no-sandbox")
-options.add_argument('--disable-gpu') 
-# options.add_argument("--headless")
 
-browser =  webdriver.Chrome(options=options)
-wait = WebDriverWait(browser, timeout=20)
+options = webdriver.ChromeOptions()
+# options.add_argument("--headless")
+options.add_argument("--no-sandbox")
+options.add_argument('--disable-gpu')
+options.add_experimental_option("excludeSwitches", ["enable-automation"])
+options.add_argument('--disable-blink-features=AutomationControlled')
+options.add_argument(f"user-data-dir={user_data_dir}")
+
+driver =  webdriver.Chrome(options=options)
+driver.execute_cdp_cmd('Network.setUserAgentOverride', {"userAgent": 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.53 Safari/537.36'})
+driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
+wait = WebDriverWait(driver, timeout=20)
 
 if config.get('actions'):
     for action in config['actions']:
         if action['type']=='navigate':       
-            browser.get(action['url'])
+            driver.get(action['url'])
         if action['type']=='type':       
             if args:
                 input_element = wait.until(EC.element_to_be_clickable((By.XPATH, action['element'].format(**args))))        
@@ -77,4 +84,6 @@ if config.get('actions'):
                 time.sleep(int(str(action['delay']).format(**args)))
             else:
                 time.sleep(int(action['delay']))  
-browser.quit()
+input("Press any key to continue")
+print()
+# driver.quit()

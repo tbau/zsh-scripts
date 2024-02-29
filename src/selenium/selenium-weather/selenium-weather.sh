@@ -6,8 +6,8 @@
 #   location: argument to be used by the config, location to search
 sgw(){
     dir=$(pwd)
-    cd ~/zsh_scripts
-    python $zsh_scripts_directories["selenium_scripts_dir"]'/start_selenium.py' "~/zsh_scripts/src/selenium/configs/weather.com/weather.com.json" $@
+    cd "$(dirname $(dirname "${zsh_scripts_directories["selenium_scripts_dir"]}"))"
+    python $zsh_scripts_directories["selenium_scripts_dir"]'/start_selenium.py'  $zsh_scripts_directories["selenium_scripts_dir"]'/configs/weather.com/weather.com.json' $@
     cd $dir
 }
 

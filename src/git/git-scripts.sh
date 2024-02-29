@@ -89,7 +89,22 @@ cb(){
 
 # Writes git changelog to file
 gclog(){
-    git log --pretty=format:"%h - %an, %ar : %s" > changelog.txt
+    
+# Clear or create the changelog file
+echo -n "" > changelog.md
+
+# Retrieve repository URL
+REPO_URL="https://github.com/$(git config --get remote.origin.url | sed 's/^git@github.com://' | sed 's/\.git$//' | tr -d '\n')"
+
+# Generate Markdown content for all commits
+git log --pretty=format:"**Commit:** [%h]($REPO_URL/commit/%H)  
+&nbsp;&nbsp;&nbsp;&nbsp;**Author:** %an <%ae>  
+&nbsp;&nbsp;&nbsp;&nbsp;**When:** %ad  
+&nbsp;&nbsp;&nbsp;&nbsp;**Body:** %B   
+" --date=format-local:"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Date**: %m/%d/%y<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Time**: %H:%M<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Timezone**: %z" >> changelog.md
 }
 
 # Downloads list of repositories from a file
@@ -117,17 +132,17 @@ fi
 
 source "$(dirname "${zsh_scripts_directories["git_scripts_dir"]}")/shared/shared-scripts.sh"
 
-documentCommand "git" "gs" "Get status of modified and committed files"
-documentCommand "git" "gp" "Pull branch from remote repository"
-documentCommand "git" "gc" "Checkout an existing branch"
-documentCommand "git" "gl" "Print commit history with graphical branches"
-documentCommand "git" "gcr" "Clone remote repository"
-documentCommand "git" "gcd" "Checkout dev branch"
-documentCommand "git" "gsw" "Switch to previous branch"
-documentCommand "git" "gmd" "Merge dev into current branch"
-documentCommand "git" "gcb" "Checkout new branch"
-documentCommand "git" "gbd" "Delete local branch"
-documentCommand "git" "gb" "Print all branches"
-documentCommand "git" "cb" "Print current branch"
-documentCommand "git" "gclog" "Output git commit changelog to file"
+documentCommand "git" "commits" "gs" "Get status of modified and committed files"
+documentCommand "git" "branches" "gp" "Pull branch from remote repository"
+documentCommand "git" "branches" "gc" "Checkout an existing branch"
+documentCommand "git" "commits" "report" "gl" "Print commit history with graphical branches"
+documentCommand "git" "repos" "gcr" "Clone remote repository"
+documentCommand "git" "branches" "gcd" "Checkout dev branch"
+documentCommand "git" "branches" "gsw" "Switch to previous branch"
+documentCommand "git" "branches" "gmd" "Merge dev into current branch"
+documentCommand "git" "branches" "gcb" "Checkout new branch"
+documentCommand "git" "branches" "gbd" "Delete local branch"
+documentCommand "git" "branches" "gb" "Print all branches"
+documentCommand "git" "branches" "cb" "Print current branch"
+documentCommand "git" "commits" "report" "gclog" "Output git commit changelog to file"
 documentCommand "git" "repos" "cloneRepos" "Clones list of repositories from a file"
