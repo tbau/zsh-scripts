@@ -2,8 +2,9 @@
 
 # Generate a password of a certain length
 passgen() {
-    tr -dc A-Za-z0-9_ </dev/urandom | head -c "$1"
-    echo ""
+     echo ""
+     LC_ALL=C awk '{gsub("[^A-Za-z0-9!@#$%^&*=+]", ""); printf "%s", $0}' < /dev/random | head -c "$1" && echo ""
+     echo ""
 }
 
 # Find the checksum of a file
@@ -30,5 +31,5 @@ fi
 source "$(dirname "${zsh_scripts_directories["utility_scripts_dir"]}")/shared/shared-scripts.sh"
 
 documentCommand "security" "password" "encryption" "passgen" "Generate a password of a certain length"
-
 documentCommand "security" "sha" "encryption" "integrity" "checksum" "Find the checksum of a file"
+documentCommand "security" "sha" "encryption" "integrity" "ssl" "certificate" "expiration" "sslCheck" "Checks the expiration date for a domain"

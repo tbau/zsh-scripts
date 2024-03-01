@@ -89,22 +89,27 @@ cb(){
 
 # Writes git changelog to file
 gclog(){
-    
-# Clear or create the changelog file
-echo -n "" > changelog.md
+    if ! git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
+        echo "Not inside a Git repository. Exiting function."
+        return
+    fi
 
-# Retrieve repository URL
-REPO_URL="https://github.com/$(git config --get remote.origin.url | sed 's/^git@github.com://' | sed 's/\.git$//' | tr -d '\n')"
+    # Clear or create the changelog file
+    echo -n "" > changelog.md
 
-# Generate Markdown content for all commits
-git log --pretty=format:"**Commit:** [%h]($REPO_URL/commit/%H)  
-&nbsp;&nbsp;&nbsp;&nbsp;**Author:** %an <%ae>  
-&nbsp;&nbsp;&nbsp;&nbsp;**When:** %ad  
-&nbsp;&nbsp;&nbsp;&nbsp;**Body:** %B   
-" --date=format-local:"<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Date**: %m/%d/%y<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Time**: %H:%M<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Timezone**: %z" >> changelog.md
+    # Retrieve repository URL
+    REPO_URL="https://github.com/$(git config --get remote.origin.url | sed 's/^git@github.com://' | sed 's/\.git$//' | tr -d '\n')"
+
+    # Generate Markdown content for all commits
+    git log --pretty=format:"**Commit:** [%h]($REPO_URL/commit/%H)  
+    &emsp;&emsp;**Author:** %an <%ae>  
+    &emsp;&emsp;**Committer:** %cn <%ae>  
+    &emsp;&emsp;**When:** %ad  
+    &emsp;&emsp;**Body:** %f   
+    " --date=format-local:"<br>
+    &emsp;&emsp;&emsp;&emsp;**Date**: %m/%d/%y<br>
+    &emsp;&emsp;&emsp;&emsp;**Time**: %H:%M<br>
+    &emsp;&emsp;&emsp;&emsp;**Timezone**: %z"  >> changelog.md
 }
 
 # Downloads list of repositories from a file

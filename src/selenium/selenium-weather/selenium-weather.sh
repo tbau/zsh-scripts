@@ -13,7 +13,7 @@ sgw(){
 
 # Gets the weather in London
 sgwlouk(){
-    sgw "London, England"
+    sgw "London, England, United Kingdom"
 }
 
 # Gets the weather in Paris
@@ -64,7 +64,7 @@ sgwrdjbr(){
 # US cities
 # Gets the weather in New York, NY
 sgwnyny(){
-    sgw "New York, NY"
+    sgw "New York City, NY"
 }
 
 # Gets the weather in Chicago, IL
