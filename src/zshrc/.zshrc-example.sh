@@ -1,14 +1,3 @@
-HISTFILE=~/.histfile
-HISTSIZE=100000
-SAVEHIST=100000
-setopt appendhistory
-
-# Used by wsl (Windows Subsystem for Linux to gui applications)
-# export DISPLAY="$(hostname).local:0"
-# export QT_X11_NO_MITSHM=1
-# export _X11_NO_MITSHM=1
-# export _MITSHM=0
-
 # Initialize nvm and pyenv
 source ~/zsh-scripts/src/nvm/init-nvm.sh
 source ~/zsh-scripts/src/pyenv/init-pyenv.sh
@@ -79,7 +68,7 @@ push_end_prompt '$NVM_PROMPT'
 # Can add newlines to end of prompt, but better to set in in display_prompt_set_newline
 # push_end_prompt_newline 
 
-# Commits custom prompt to memory so it can be used to calculate end prompt of ever prompt calculation
-# Also added $END_PROMPT to end of current prompt
+# Commits custom prompt to memory so it can be used to calculate end prompt for every prompt calculation
+# Also adds $END_PROMPT to end of current prompt
 set_end_prompt
 PROMPT=$PROMPT'> '
