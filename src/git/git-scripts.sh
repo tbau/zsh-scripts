@@ -17,6 +17,11 @@ if [[ -z "$git_scripts_file_sourced" ]]; then
         git push
     }
 
+    # Git add
+    ga() {
+        git add .
+    }
+
     # Git add interactive
     gai(){
         git add -i
@@ -31,6 +36,25 @@ if [[ -z "$git_scripts_file_sourced" ]]; then
     # Get files from stash and add them to branch
     gstshp(){
         git stash pop
+    }
+
+    # Git commit
+    gcm() {
+        if [[ "$1" = "-h" || "$1" = "--help" ]]; then
+            echo "Usage: git_commit [<commit_message>]"
+            echo "       git_commit -h | --help"
+            echo
+            echo "Description:"
+            echo "    Commits changes to the Git repository."
+            echo "    If no message is provided, it will open the default text editor to enter the commit message."
+            return 0
+        fi
+
+        if [[ -n "$1" ]]; then
+            git commit -m "$1"
+        else
+            git commit
+        fi
     }
 
     # Git checkout
@@ -222,7 +246,6 @@ if [[ -z "$git_scripts_file_sourced" ]]; then
             echo "Usage: usuga: Set the USE_GITHUB_AUTHENTICATION variable to false, disabling GitHub authentication."
             return 0
         fi
-
         export USE_GITHUB_AUTHENTICATION=false
         echo "USE_GITHUB_AUTHENTICATION set to false."
         save_vars
@@ -335,6 +358,24 @@ if [[ -z "$git_scripts_file_sourced" ]]; then
         done    
     }
 
+
+    # Rebase only new commits on current branch onto another branch
+    gbrb() {
+        if [[ -z "$1" ]]; then
+            echo "Usage: gbrb <base-branch>"
+            echo "Rebase only the new commits (not in the base branch) onto the specified base branch."
+            echo
+            return 1
+        fi
+
+        # Find the common ancestor (divergence point) between the current branch and the base branch
+        local base_branch="$1"
+        local divergence_point=$(git merge-base HEAD "$base_branch")
+
+        # Rebase only the commits after the divergence point onto the base branch
+        git rebase --onto "$base_branch" "$divergence_point" HEAD
+    }
+
     # Downloads list of repositories from a file
     cloneRepos(){
         while IFS= read -r repo; do
@@ -359,16 +400,20 @@ if [[ -z "$git_scripts_file_sourced" ]]; then
     fi
 
     export USE_GITHUB_AUTHENTICATION=false
+
     source "$(dirname "${zsh_scripts_directories["git_scripts_dir"]}")/shared/shared-scripts.sh"
+    
     add_var "USE_GITHUB_AUTHENTICATION"
     load_vars
 
     documentCommand "git" "commits" "gs" "Get status of modified and committed files"
     documentCommand "git" "branches" "gp" "Pull branch from remote repository"
     documentCommand "git" "branches" "gpsh" "Push branch to remote repository"
-    documentCommand "git" "commits" "file" "gai" "Add files to commit interactively"
+    documentCommand "git" "commits" "file" "ga" "Add files to staged files"
+    documentCommand "git" "commits" "file" "gai" "Add files to staged files interactively"
     documentCommand "git" "commits" "file" "stash" "gstsh" "Add files to staged files and stash them"
     documentCommand "git" "commits" "file" "stash" "pop" "gstshp" "Get files from stash and add them to branch"
+    documentCommand "git" "commits" "repos" "changes" "gcm"  "Commits changes to the repository"
     documentCommand "git" "branches" "gc" "Checkout an existing branch"
     documentCommand "git" "commits" "report" "gl" "Print commit history with graphical branches"
     documentCommand "git" "repos" "gcr" "Clone remote repository"
@@ -385,6 +430,7 @@ if [[ -z "$git_scripts_file_sourced" ]]; then
     documentCommand "git" "repos" "commits" "authentication" "grf" "report" "suga" "Set USE_GITHUB_AUTHENTICATION to true"
     documentCommand "git" "repos" "commits" "authentication" "grf" "report" "usuga" "Set USE_GITHUB_AUTHENTICATION to false"
     documentCommand "git" "repos" "cloneRepos" "Clones list of repositories from a file"
+    documentCommand "git" "branches" "rebase" "gbrb" "Rebase only new commits on current branch onto another branch"
 fi
 
 git_scripts_file_sourced=true

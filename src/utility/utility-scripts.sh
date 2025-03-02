@@ -238,6 +238,34 @@ if [[ -z "$utility_scripts_file_sourced" ]]; then
         echo ""
     }
 
+    # Decode JWT token
+    # Arguments:
+    #   JWT: jwt token to decode
+    jwtd() {
+        local jwt="$1"
+        
+        # Check if the jwt token is empty
+        if [[ -z "$jwt" ]]; then
+            echo "Error: JWT token not found."
+            return 1
+        fi
+        
+        echo "Decoded JWT Token: "
+        echo $(echo "$jwt" | cut -d "." -f 2 | base64 --decode)
+    }
+
+    st() {
+        if [[ -z "$1" ]]; then
+            echo "Usage: search_text <search_term> [directory]"
+            return 1
+        fi
+
+        local search_term="$1"
+        local search_dir="${2:-/}"  # Default to root directory if not specified
+
+        grep -rnw "$search_dir" -e "$search_term"
+    }
+
     # Used to setup pathing
     # Do not remove or script will not know how to find other scripts
     declare -A zsh_scripts_directories
@@ -253,6 +281,8 @@ if [[ -z "$utility_scripts_file_sourced" ]]; then
     documentCommand "file" "analyze" "count" "report" "anfi" "Analyze a file and provide a word count report"
     documentCommand "file" "directory" "analyze" "count" "report" "andir" "Analyze directory and provide a word count report for files"
     documentCommand "file" "analyze" "security" "report" "scan" "pt" "Pull sensitive information from a file"
+    documentCommand "jwt" "decode" "jwtd" "Decode JWT token"
+    documentCommand "search" "text" "st" "Search for text in files"
 fi
 
 utility_scripts_file_sourced=true

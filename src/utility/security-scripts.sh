@@ -20,6 +20,11 @@ if [[ -z "$security_scripts_file_sourced" ]]; then
         echo "SSL certificate for $domain expires on $expiration_date"
     }
 
+    # Generates new private and public key for ssh or github login
+    genSshKey(){
+        ssh-keygen -t rsa -b 2048
+    }
+
     # Used to setup pathing
     # Do not remove or script will not know how to find other scripts
     declare -A zsh_scripts_directories
@@ -34,6 +39,7 @@ if [[ -z "$security_scripts_file_sourced" ]]; then
     documentCommand "security" "password" "encryption" "passgen" "Generate a password of a certain length"
     documentCommand "security" "sha" "encryption" "integrity" "checksum" "Find the checksum of a file"
     documentCommand "security" "sha" "encryption" "integrity" "ssl" "certificate" "expiration" "sslCheck" "Checks the expiration date for a domain"
+    documentCommand "security" "sha" "encryption" "ssl" "certificate" "key" "generate" "login" "genSshKey" "Generates new private and public key for ssh or github login"
 fi
 
 security_scripts_file_sourced=true

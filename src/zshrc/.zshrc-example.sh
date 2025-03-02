@@ -1,6 +1,19 @@
+HISTFILE=~/.histfile
+HISTSIZE=100000
+SAVEHIST=100000
+setopt appendhistory
+
+# GITHUB_TOKEN=$(cmd.exe /c echo %GITHUB_TOKEN% 2>/dev/null)
+
+export DISPLAY="$(hostname).local:0"
+export QT_X11_NO_MITSHM=1
+export _X11_NO_MITSHM=1
+export _MITSHM=0
+
 # Initialize nvm and pyenv
 source ~/zsh-scripts/src/nvm/init-nvm.sh
 source ~/zsh-scripts/src/pyenv/init-pyenv.sh
+source ~/zsh-scripts/src/rvm/init-rvm.sh
 
 # Initialize auto loading of .nvmrc and .python-version files
 source ~/zsh-scripts/src/nvm/auto-load-nvm.sh
@@ -11,6 +24,7 @@ source ~/zsh-scripts/src/ip/ip-prompt.sh
 source ~/zsh-scripts/src/git/git-prompt.sh
 source ~/zsh-scripts/src/nvm/nvm-prompt.sh
 source ~/zsh-scripts/src/pyenv/pyenv-prompt.sh
+source ~/zsh-scripts/src/rvm/rvm-prompt.sh
 
 # Initialize prompt helpers for displaying prompts
 source ~/zsh-scripts/src/prompt/load-prompts.sh
@@ -33,6 +47,9 @@ source ~/zsh-scripts/src/utility/dev-resource-scripts.sh
 # Initalize shortcuts for utility commands
 source ~/zsh-scripts/src/utility/utility-scripts.sh
 
+# Initalize shortcuts for theme management
+source ~/zsh-scripts/src/utility/theme-scripts.sh
+
 # Initalize shortcuts for weather commands
 source ~/zsh-scripts/src/weather/weather-scripts.sh
 
@@ -42,6 +59,8 @@ git_prompt_set_newline 0 1
 nvm_prompt_set_newline 0 1
 # Sets the newline before and after the pyenv prompt
 pyenv_prompt_set_newline 0 1
+# Sets the newline before and after the rvm prompt
+rvm_prompt_set_newline 0 1
 # Sets the newline before and after the whole block of prompts
 # The first two arguments are for the newlines before and after
 # The next two arguments are for the newlines before and after if no prompts are showing
@@ -52,7 +71,7 @@ setopt PROMPT_SUBST
 # Add prompts to precmd hooks to recalculate values for each prompt
 # display_prompt_newline displays added prompts add the end of the prompt 
 # display_prompt_newline must come after all other prompt functions
-init_prompts ip_prompt git_prompt_newline nvm_prompt_newline pyenv_prompt_newline display_prompt_newline
+init_prompts ip_prompt git_prompt_newline nvm_prompt_newline pyenv_prompt_newline rvm_prompt_newline display_prompt_newline
 
 PROMPT='%F{green}[%f%n@$IP_PROMPT %F{cyan}%~%F{green}]%f'
 
@@ -62,8 +81,9 @@ PROMPT='%F{green}[%f%n@$IP_PROMPT %F{cyan}%~%F{green}]%f'
 
 # Pushes prompt variables calculated in precmd hooks to be displayed in display_prompt_newline
 push_end_prompt '$GIT_PROMPT'
-push_end_prompt '$PYENV_PROMPT'
 push_end_prompt '$NVM_PROMPT'
+push_end_prompt '$PYENV_PROMPT'
+push_end_prompt '$RVM_PROMPT'
 
 # Can add newlines to end of prompt, but better to set in in display_prompt_set_newline
 # push_end_prompt_newline 

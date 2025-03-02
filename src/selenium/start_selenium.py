@@ -48,13 +48,24 @@ if config.get('actions'):
     for action in config['actions']:
         if action['type']=='navigate':       
             driver.get(action['url'])
-        if action['type']=='type':       
-            if args:
-                input_element = wait.until(EC.element_to_be_clickable((By.XPATH, action['element'].format(**args))))        
-                input_element.send_keys(action['text'].format(**args))
+        if action['type']=='type':      
+            if action.get('switch_frame') == True:
+                iframe = wait.until(EC.presence_of_element_located(By.XPATH, action['element']))
+                driver.switch_to.frame(iframe) 
+                if args:
+                    input_element = wait.until(EC.element_to_be_clickable((By.XPATH, action['from_element'].format(**args))))        
+                    input_element.send_keys(action['text'].format(**args))
+                else:
+                    input_element = wait.until(EC.element_to_be_clickable((By.XPATH, action['from_element'])))        
+                    input_element.send_keys(action['text']) 
+                driver.switch_to.default_content()
             else:
-                input_element = wait.until(EC.element_to_be_clickable((By.XPATH, action['element'])))        
-                input_element.send_keys(action['text'])            
+                if args:
+                    input_element = wait.until(EC.element_to_be_clickable((By.XPATH, action['element'].format(**args))))        
+                    input_element.send_keys(action['text'].format(**args))
+                else:
+                    input_element = wait.until(EC.element_to_be_clickable((By.XPATH, action['element'])))        
+                    input_element.send_keys(action['text'])            
         if action['type']=='enter':       
             input_element.send_keys(Keys.ENTER)
         if action['type']=='click':       

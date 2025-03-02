@@ -95,9 +95,12 @@ if [[ -z "$shared_scripts_file_sourced" ]]; then
             echo "export $var=$value" >> ~/.zshrc_vars.sh
         done
     }
-
+    
     # Load all of the variables in the list of variables saved from ~/.zshrc_vars
     load_vars(){
+        if [ ! -f ~/.zshrc_vars.sh ]; then
+            touch ~/.zshrc_vars.sh
+        fi
         source ~/.zshrc_vars.sh
     }
 
