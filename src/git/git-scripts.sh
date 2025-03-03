@@ -18,7 +18,7 @@ if [[ -z "$git_scripts_file_sourced" ]]; then
     }
 
     # Git add
-    gaa() {
+    ga() {
         git add .
     }
 
@@ -409,7 +409,7 @@ if [[ -z "$git_scripts_file_sourced" ]]; then
     documentCommand "git" "commits" "gs" "Get status of modified and committed files"
     documentCommand "git" "branches" "gp" "Pull branch from remote repository"
     documentCommand "git" "branches" "gpsh" "Push branch to remote repository"
-    documentCommand "git" "commits" "file" "gaa" "Add files to staged files"
+    documentCommand "git" "commits" "file" "ga" "Add files to staged files"
     documentCommand "git" "commits" "file" "gai" "Add files to staged files interactively"
     documentCommand "git" "commits" "file" "stash" "gstsh" "Add files to staged files and stash them"
     documentCommand "git" "commits" "file" "stash" "pop" "gstshp" "Get files from stash and add them to branch"

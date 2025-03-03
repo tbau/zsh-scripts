@@ -3,7 +3,7 @@
  if [[ -z "$note_scripts_file_sourced" ]]; then
     # Create a note
     nadd() {
-        local note_file="$HOME/.notes/$(date +%Y-%m-%d_%H-%M-%S).md"
+        local note_file="$HOME/.notes/${1:-$(date +%Y-%m-%d_%H-%M-%S)}.md"
         touch "$note_file"
         vim "$note_file"
     }
