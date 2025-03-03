@@ -2,7 +2,7 @@
 
  if [[ -z "$note_scripts_file_sourced" ]]; then
     # Create a note
-    ncreate() {
+    nadd() {
         local note_file="$HOME/.notes/$(date +%Y-%m-%d_%H-%M-%S).md"
         touch "$note_file"
         vim "$note_file"
@@ -22,7 +22,7 @@
     }
 
     # Delete a note
-    ndelete() {
+    ndel() {
         local note_file="$(fzf --query="$1" --select-1 --exit-0 --tac < <(nlist))"
         if [ -n "$note_file" ]; then
             rm "$note_file"
@@ -51,7 +51,7 @@
     }
 
     # Remove a tag from a note
-    ntagr() {
+    ntagrm() {
         local note_file="$(fzf --query="$2" --select-1 --exit-0 --tac < <(nlist))"
         if [ -n "$note_file" ]; then
             local tag=$(echo "$1" | tr '[:upper:]' '[:lower:]')
@@ -72,7 +72,7 @@
     }
 
     # List all tags
-    ntags() {
+    ntaglist() {
         find "$HOME/.notes/tags" -type f -printf "%f\n" | sort -u
     }
 
@@ -96,7 +96,7 @@
     }
 
     # List all tags for a specific note
-    ntagsd() {
+    ntags() {
         local note_file="$(fzf --query="$1" --select-1 --exit-0 --tac < <(nlist))"
         if [ -n "$note_file" ]; then
             find "$note_file" -type f -name "*.md" -exec grep -ohE '^# [a-zA-Z0-9_\-]+' {} \; | sort -u
@@ -130,12 +130,16 @@
         zsh_scripts_directories["note_scripts_dir"]=$(dirname "${BASH_SOURCE[0]}")
     fi
 
+    documentCommand "notes" "add" "note" "nadd" "Create a new note"
+    documentCommand "notes" "list" "notes" "nlist" "List all notes"
+    documentCommand "notes" "edit" "note" "nedit" "Edit a note"
+    documentCommand "notes" "delete" "note" "ndel" "Delete a note"
+    documentCommand "notes" "rename" "file" "nrename" "Rename a note"
     documentCommand "notes" "add" "tag" "ntag" "Add a tag to a note"
     documentCommand "notes" "remove" "tag" "ntagr" "Remove a tag from a note"
-    documentCommand "notes" "list" "tags" "ntags" "List all tags"
+    documentCommand "notes" "list" "tags" "ntaglist" "List all tags"
     documentCommand "notes" "list" "notes" "tagged" "ntagged" "List all notes with a specific tag"
-    documentCommand "notes" "rename" "file" "nrename" "Rename a note"
-    documentCommand "notes" "list" "tags" "ntagsd" "List all tags for a specific note"
+    documentCommand "notes" "list" "tags" "ntags" "List all tags for a specific note"
     documentCommand "notes" "list" "tags" "nltags" "List all tags for each note"
  fi
 
