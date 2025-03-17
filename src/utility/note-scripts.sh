@@ -10,7 +10,13 @@
 
     # List all notes
     nlist() {
-        find "$HOME/.notes" -type f -name "*.md" -printf "%T@ %p\n" | cut -f2- -d' '
+        if [[ "$OSTYPE" == "darwin"* ]]; then
+            # macOS
+            find "$HOME/.notes" -type f -name "*.md" -exec stat -f '%N' {} \; | sort -rn
+        else
+            # Linux
+            find "$HOME/.notes" -type f -name "*.md" -printf "%T@ %p\n" | cut -f2- -d' '
+        fi
     }
 
     # Edit a note
@@ -73,7 +79,7 @@
 
     # List all tags
     ntaglist() {
-        find "$HOME/.notes/tags" -type f -printf "%f\n" | sort -u
+        ls -1 "$HOME/.notes/tags" | sort -u
     }
 
     # List all notes with a specific tag
