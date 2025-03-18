@@ -105,7 +105,11 @@
     ntags() {
         local note_file="$(fzf --query="$1" --select-1 --exit-0 --tac < <(nlist))"
         if [ -n "$note_file" ]; then
-            find "$note_file" -type f -name "*.md" -exec grep -ohE '^# [a-zA-Z0-9_\-]+' {} \; | sort -u
+            for tag_file in "$HOME/.notes/tags"/*; do
+                if grep -q "^$note_file$" "$tag_file"; then
+                    echo "  - $(basename "$tag_file")"
+                fi
+            done | sort -u
         fi
     }
 
