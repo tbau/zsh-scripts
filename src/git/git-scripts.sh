@@ -39,7 +39,7 @@ if [[ -z "$git_scripts_file_sourced" ]]; then
     }
 
     # Git commit
-    gcm() {
+    gcmt() {
         if [[ "$1" = "-h" || "$1" = "--help" ]]; then
             echo "Usage: git_commit [<commit_message>]"
             echo "       git_commit -h | --help"
@@ -91,6 +91,11 @@ if [[ -z "$git_scripts_file_sourced" ]]; then
         git checkout dev
     }
 
+    # Checkout main branch
+    gcm(){
+        git checkout main
+    }
+
     #Switch to previous branch
     gsw(){
         git switch -
@@ -99,6 +104,11 @@ if [[ -z "$git_scripts_file_sourced" ]]; then
     # Merge dev
     gmd(){
         git merge dev
+    }
+
+    # Merge main
+    gmm(){
+        git merge main
     }
 
     # Git checkout branch
@@ -413,13 +423,15 @@ if [[ -z "$git_scripts_file_sourced" ]]; then
     documentCommand "git" "commits" "file" "gai" "Add files to staged files interactively"
     documentCommand "git" "commits" "file" "stash" "gstsh" "Add files to staged files and stash them"
     documentCommand "git" "commits" "file" "stash" "pop" "gstshp" "Get files from stash and add them to branch"
-    documentCommand "git" "commits" "repos" "changes" "gcm"  "Commits changes to the repository"
+    documentCommand "git" "commits" "repos" "changes" "gcmt"  "Commits changes to the repository"
     documentCommand "git" "branches" "gc" "Checkout an existing branch"
     documentCommand "git" "commits" "report" "gl" "Print commit history with graphical branches"
     documentCommand "git" "repos" "gcr" "Clone remote repository"
     documentCommand "git" "branches" "gcd" "Checkout dev branch"
+    documentCommand "git" "branches" "gcm" "Checkout main branch"
     documentCommand "git" "branches" "gsw" "Switch to previous branch"
     documentCommand "git" "branches" "gmd" "Merge dev into current branch"
+    documentCommand "git" "branches" "gmm" "Merge main into current branch"
     documentCommand "git" "branches" "gcb" "Checkout new branch"
     documentCommand "git" "branches" "gbd" "Delete local branch"
     documentCommand "git" "branches" "gbr" "Print all branches"
@@ -431,6 +443,43 @@ if [[ -z "$git_scripts_file_sourced" ]]; then
     documentCommand "git" "repos" "commits" "authentication" "grf" "report" "usuga" "Set USE_GITHUB_AUTHENTICATION to false"
     documentCommand "git" "repos" "cloneRepos" "Clones list of repositories from a file"
     documentCommand "git" "branches" "rebase" "gbrb" "Rebase only new commits on current branch onto another branch"
+
+    # Reuse zsh's git completion for wrapped commands
+    if [[ -n "$ZSH_VERSION" ]]; then
+        autoload -Uz compinit >/dev/null 2>&1
+        (( $+functions[compdef] )) || compinit
+
+        if (( $+functions[_git] )); then
+            compdef _git \
+                gs='git-status' \
+                gp='git-pull' \
+                gpsh='git-push' \
+                ga='git-add' \
+                gai='git-add' \
+                gstsh='git-stash' \
+                gstshp='git-stash' \
+                gcmt='git-commit' \
+                gc='git-checkout' \
+                gl='git-log' \
+                gcr='git-clone' \
+                gcd='git-checkout' \
+                gcm='git-checkout' \
+                gsw='git-switch' \
+                gmd='git-merge' \
+                gmm='git-merge' \
+                gcb='git-checkout' \
+                gbd='git-branch' \
+                gbr='git-branch' \
+                cbr='git-rev-parse' \
+                gclog='git-log' \
+                gbl='git-blame' \
+                gbrb='git-rebase'
+        fi
+
+        # Non-git subcommand helpers
+        compdef _files cloneRepos
+        compdef _nothing suga usuga grf
+    fi
 fi
 
 git_scripts_file_sourced=true
